@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/src/components/cardSwiper.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -13,9 +14,19 @@ class HomePage extends StatelessWidget {
           IconButton(icon: Icon(Icons.search), onPressed: () {})
         ],
       ),
-      body: SafeArea(child:      
-        Text('Bienvenido a movie App'),
-      ) 
+      body: Container(
+        child : Column(
+          children: <Widget>[
+            _swiperCards()
+          ],
+        )
+      )
     );
   }
+}
+
+Widget _swiperCards(){
+  return CardSwiper(
+    elements: [1,2,3,4,5],
+  );
 }
