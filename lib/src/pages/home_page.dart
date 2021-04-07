@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/src/components/cardSwiper.dart';
 import 'package:movie_app/src/providers/movie.provider.dart';
 
+import '../components/carousel.dart';
+
 class HomePage extends StatelessWidget {
 
   final movieProvider = MovieProvider();
@@ -11,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar( 
         centerTitle: false,
-        title: Text('Movies showing'),
+        title: Text('Welcome to Cinema'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search), onPressed: () {})
         ],
@@ -45,14 +47,21 @@ class HomePage extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: <Widget>[
-          Text('Populares', style: Theme.of(context).textTheme.subtitle1,),
+          Container(
+            padding: EdgeInsets.only(left : 20.0),
+            child: Text('Populares', style: Theme.of(context).textTheme.subtitle1,)
+          ),
           FutureBuilder(
             future : movieProvider.getPopularMovies(),
             builder : (BuildContext context, AsyncSnapshot<List> snapshot){
-             snapshot.data.forEach((element) {
-               print(element.title);
-             });
-             return Container();
+              if(snapshot.hasData){
+                 return Carousel(
+                   movies: snapshot.data
+                );
+              }else{
+                return Center(child: CircularProgressIndicator());
+              }
+               
             }
 
           )
